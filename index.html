@@ -4,13 +4,9 @@
   <meta charset="UTF-8">
   <title>Video Audio Evaluation Task</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-      margin: 18px;
-    }
+    body { font-family: Arial, sans-serif; font-size: 18px; margin: 18px; }
     .rating-group { margin: 5px 0; }
-    .video-section { margin-bottom: 10px; display: inline-block; vertical-align: top; width: 48%; }
+    .video-section { display: inline-block; vertical-align: top; width: 48%; margin-bottom:10px; }
     video { width: 100%; height: auto; }
     label { display: block; margin: 2px 0; }
     select { width: 100%; font-size: 16px; }
@@ -21,24 +17,33 @@
 <body>
   <div id="cover-page">
     <h3>Video Audio Evaluation Task</h3>
-    <p>为视频选择更合适的配音,并为每对音视频并给出音频质量、语义对齐、时间对齐三个维度的评分</p>
+    <p>为视频选择更合适的配音，并为每对音视频给出音频质量、语义对齐、时间对齐三个维度的评分。</p>
     <button id="startTask">Start</button>
   </div>
 
   <div id="rating-task" style="display:none;">
-    <label>请选择:下面两个视频哪一个的配音更合适,并为每对音视频并给出音频质量、语义对齐、时间对齐三个维度的评分</label>
+    <label>请选择: 下面两个视频哪一个的配音更合适，并为每对音视频给出评分</label>
     <p id="question-counter"></p>
 
-    <div class="video-section">
-      <h4>Video A</h4>
-      <video id="videoA" controls></video>
-      <label><input type="radio" name="preferredAudio" value="A"> Audio of Video A is more suitable</label>
+    <div style="display:flex; justify-content: space-between;">
+      <!-- Video A -->
+      <div class="video-section">
+        <h4>Video A</h4>
+        <video id="videoA" controls></video>
+        <label><input type="radio" name="preferredAudio" value="A"> Audio of Video A is more suitable</label>
+      </div>
+
+      <!-- Video B -->
+      <div class="video-section">
+        <h4>Video B</h4>
+        <video id="videoB" controls></video>
+        <label><input type="radio" name="preferredAudio" value="B"> Audio of Video B is more suitable</label>
+      </div>
     </div>
 
-    <div class="video-section">
-      <h4>Video B</h4>
-      <video id="videoB" controls></video>
-      <label><input type="radio" name="preferredAudio" value="B"> Audio of Video B is more suitable</label>
+    <!-- Equal Option 单独一行居中 -->
+    <div style="text-align:center; margin-top:10px;">
+      <label><input type="radio" name="preferredAudio" value="equal"> 两个音频都很合适(尽量不要选这个)</label>
     </div>
 
     <hr style="margin:5px 0;">

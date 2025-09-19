@@ -85,8 +85,9 @@ const videoPairs = [
 let current = 0;
 let results = [];
 const ratingLabels = ["差","较差","一般","好","很好"];
+let randomizedPairs = [];
 
-// 初始化下拉选项
+// 创建评分下拉选项
 function createDropdown(selectId) {
   const select = document.getElementById(selectId);
   select.innerHTML = '<option value="">Select</option>';
@@ -98,12 +99,20 @@ function createDropdown(selectId) {
   }
 }
 
+// 随机化每组视频顺序
+function randomizePairs() {
+  randomizedPairs = videoPairs.map(pair => {
+    if (Math.random() < 0.5) return { left: pair[0], right: pair[1], original: pair };
+    else return { left: pair[1], right: pair[0], original: pair };
+  });
+}
+
 // 加载题目
 function loadQuestion(index) {
-  document.getElementById("question-counter").textContent =
-    `Question ${index+1} / ${videoPairs.length}`;
-  document.getElementById("videoA").src = videoPairs[index][0];
-  document.getElementById("videoB").src = videoPairs[index][1];
+  const pair = randomizedPairs[index];
+  document.getElementById("question-counter").textContent = `Question ${index+1} / ${videoPairs.length}`;
+  document.getElementById("videoA").src = pair.left;
+  document.getElementById("videoB").src = pair.right;
 
   // 清空选择
   document.querySelectorAll('input[name="preferredAudio"]').forEach(el => el.checked = false);
@@ -129,6 +138,7 @@ window.onload = () => {
     document.getElementById("rating-task").style.display = 'block';
     current = 0;
     results = [];
+    randomizePairs();
     loadQuestion(current);
   });
 
@@ -145,10 +155,10 @@ window.onload = () => {
     }
 
     results[current] = {
-      question: current+1,
-      videoA: videoPairs[current][0],
-      videoB: videoPairs[current][1],
-      preferredAudio: preferred,
+      question: current + 1,
+      originalVideoA: randomizedPairs[current].original[0],
+      originalVideoB: randomizedPairs[current].original[1],
+      preferredAudio: preferred, // "A", "B" 或 "equal"
       ...scores,
       timestamp: new Date().toISOString()
     };
@@ -162,10 +172,11 @@ window.onload = () => {
   });
 
   document.getElementById("backBtn").addEventListener("click", () => {
-    if (current>0) { current--; loadQuestion(current); }
+    if (current > 0) { current--; loadQuestion(current); }
   });
 };
 
+// 下载 CSV
 function downloadCSV() {
   if (!results.length) { alert("No results."); return; }
   const header = Object.keys(results[0]).join(",");
