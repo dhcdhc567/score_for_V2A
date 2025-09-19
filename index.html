@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Comparison Task</title>
+</head>
+<body>
+  <div id="cover-page">
+    <h2>Welcome to the Video Comparison Task</h2>
+    <p>You will watch pairs of videos and choose which one you think is better.</p>
+    <button id="startTask">Start</button>
+  </div>
+
+  <div id="rating-task" style="display:none;">
+    <p id="question-counter"></p>
+
+    <div>
+      <video id="videoA" width="320" controls></video>
+      <label><input type="radio" name="choice" value="A"> Video A is better</label>
+    </div>
+
+    <div>
+      <video id="videoB" width="320" controls></video>
+      <label><input type="radio" name="choice" value="B"> Video B is better</label>
+    </div>
+
+    <button id="submitBtn">Submit</button>
+  </div>
+
+  <div id="complete" style="display:none;">
+    <h3>All questions finished. Thank you!</h3>
+    <button onclick="downloadCSV()">Download Results</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
